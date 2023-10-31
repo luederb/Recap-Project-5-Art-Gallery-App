@@ -1,17 +1,23 @@
-// const fetcher = (...args) => fetch(...args).then((res) => res.json());
-// import Link from "next/link";
+import ArtPieces from "../components/ArtPieces/index.js";
+import useSWR from "swr";
 
-export default function HomePage({ pieces }) {
+const fetcher = (...args) => fetch(...args).then((res) => res.json());
+
+export default function HomePage() {
+  const {
+    data: pieces,
+    error,
+    isLoading,
+  } = useSWR("https://example-apis.vercel.app/api/art", fetcher);
+  if (error) return <div>failed to load</div>;
+  if (isLoading) return <div>loading...</div>;
+  console.log("data: ", pieces);
   return (
-    <div>
-      <h1>Art</h1>
-      <ul>
-        {pieces.map((piece) => {
-          <li key={piece.slug}>
-            <p>{piece.name}</p>
-          </li>;
-        })}
-      </ul>
-    </div>
+    <>
+      <h1>homepage</h1>
+      <div>
+        <ArtPieces pieces={pieces} />
+      </div>
+    </>
   );
 }
