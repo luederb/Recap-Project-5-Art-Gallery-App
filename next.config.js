@@ -1,5 +1,4 @@
 /** @type {import('next').NextConfig} */
-// import Image from "next/image";
 const nextConfig = {
   compiler: {
     styledComponents: true,
